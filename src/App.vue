@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <center>
-        <img class="image" id="text-img" alt="Vue logo" src="./assets/screen.png">
+        <img class="image" id="text-img" alt="Vue logo" src="./assets/screene.png">
         <div class="all">
             <button class="btn" v-on:click="show">recognize</button>
         </div>
@@ -104,7 +104,7 @@ export default {
   margin-left: 32px;
   margin-right: 32px;
   border-radius: 2px;
-  width: 80%;
+  width: auto;
   height: auto;
   -webkit-filter: drop-shadow(5px 5px 5px #efefef);
   filter: drop-shadow(5px 5px 5px #efefef);
