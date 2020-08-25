@@ -3,11 +3,11 @@
         <h2 class="text">{{legal}}</h2>
         <center>
             <div>
-                <div class="horiz"><vc-donut :size="120" :sections="sections0" :thickness="30"><h2>droit</h2><h1>{{this.sections0.value}}</h1></vc-donut></div>
-                <div class="horiz"><vc-donut :size="120" :sections="sections1" :thickness="30"><h2>permission</h2></vc-donut></div>
-                <div class="horiz"><vc-donut :size="120" :sections="sections2" :thickness="30"><h2>obligation</h2></vc-donut></div>
-                <div class="horiz"><vc-donut :size="120" :sections="sections3" :thickness="30"><h2>prohibition</h2></vc-donut></div>
-                <div class="horiz"><vc-donut :size="120" :sections="sections4" :thickness="30"><h2>autre</h2></vc-donut></div>
+                <div class="horiz"><vc-donut :size="120" :sections="sections0" :thickness="30"><h2>droit</h2><h1 ref="droit">HH</h1></vc-donut></div>
+                <div class="horiz"><vc-donut :size="120" :sections="sections1" :thickness="30"><h2>permission</h2><h1 ref="perm"></h1></vc-donut></div>
+                <div class="horiz"><vc-donut :size="120" :sections="sections2" :thickness="30"><h2>obligation</h2><h1 ref="oblg"></h1></vc-donut></div>
+                <div class="horiz"><vc-donut :size="120" :sections="sections3" :thickness="30"><h2>prohibition</h2><h1 ref="proh"></h1></vc-donut></div>
+                <div class="horiz"><vc-donut :size="120" :sections="sections4" :thickness="30"><h2>autre</h2><h1 ref="autr"></h1></vc-donut></div>
             </div>
         </center>
     </div>
@@ -16,6 +16,7 @@
 <script>
 
 import Donut from 'vue-css-donut-chart';
+import axios from 'axios';
 
 export default {
     name:'item',
@@ -40,7 +41,24 @@ export default {
         sections4: [
           { label: 'Blue section', value: 25, color: '#6a9cd1' }
         ] ,
+        url : "http://127.0.0.1:5000/",
       }
+    },
+    mounted() {
+        axios.post(`${this.url}/classify`,{
+                text : this.legal ,
+            }).then((response) => {
+                this.sections0[0].value = response.data.classes[0] * 100;
+                this.$refs["droit"].innerText = Math.round(this.sections0[0].value*100)/100 + "%";
+                this.sections1[0].value = response.data.classes[1] * 100;
+                this.$refs["perm"].innerText = Math.round(this.sections1[0].value*100)/100 + "%";
+                this.sections2[0].value = response.data.classes[2] * 100;
+                this.$refs["oblg"].innerText = Math.round(this.sections2[0].value*100)/100 + "%";
+                this.sections3[0].value = response.data.classes[3] * 100;
+                this.$refs["proh"].innerText = Math.round(this.sections3[0].value*100)/100 + "%";
+                this.sections4[0].value = response.data.classes[4] * 100;
+                this.$refs["autr"].innerText = Math.round(this.sections4[0].value*100)/100 + "%";
+            })
     },
 }
 </script>
