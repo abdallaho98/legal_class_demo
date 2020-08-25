@@ -3,9 +3,10 @@
     <center>
         <img class="image" id="text-img" alt="Vue logo" src="./assets/screen.png">
         <div class="all">
-            <button class="btn" v-on:click="recognize">recognize</button>
+            <button class="btn" v-on:click="show">recognize</button>
         </div>
-        <div class="loader"></div>
+        <div v-show="showLoading" class="loader"></div>
+        <legal />
     </center>
   </div>
 </template>
@@ -13,14 +14,16 @@
 <script>
 /* eslint-disable */
 import { createWorker, PSM, OEM } from 'tesseract.js';
+import legal from './legal'
 const worker = createWorker({
   logger: m => console.log(m),
 });
 
+
 export default {
   name: 'app',
   methods: {
-    recognize: async () => {
+    recognize: async (context) => {
       const img = document.getElementById('text-img');
       console.log(img);
       await worker.load();
@@ -30,9 +33,28 @@ export default {
         tessedit_pageseg_mode: PSM.SINGLE_BLOCK,
       });
       const { data: { text } } = await worker.recognize(img);
-      console.log(text);
+      context.hide(text);
+      console.log(context);
+      return text;
+    } ,
+    show() {
+        this.showLoading = true;
+        this.recognize(this);
+    },
+    hide(data) {
+        this.textOCR = data;
+        this.showLoading = false;
+        console.log(this.textOCR);
     }
-  }
+  },
+  
+
+  data: function() {
+      return {
+        showLoading: false,
+        textOCR: '',
+      }
+    }
 }
 </script>
 
