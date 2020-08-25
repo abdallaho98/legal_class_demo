@@ -1,7 +1,6 @@
 <template>
     <div class="legal-item">
-    <h2 class="text">{{legal.content}}</h2>
-        
+    <h2 class="text">{{legal}}</h2>
     </div>
 </template>
 
@@ -18,7 +17,7 @@ export default {
     .legal-item{
         z-index: 5;
         border: 24px;
-        margin: 100px;
+        margin-top: 100px;
         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
         transition: 0.3s;
         border-radius: 5px; /* 5px rounded corners */ 

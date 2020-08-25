@@ -6,7 +6,11 @@
             <button class="btn" v-on:click="show">recognize</button>
         </div>
         <div v-show="showLoading" class="loader"></div>
-        <legal />
+        <div  v-bind:key="legal" v-for="legal in data">
+            <div>
+                <legal v-bind:legal="legal"/>
+            </div>
+        </div>
     </center>
   </div>
 </template>
@@ -44,16 +48,18 @@ export default {
         this.showLoading = true;
         this.recognize(this);
     },
-    hide(data) {
-        this.textOCR = data;
+    hide(dataText) {
+        this.textOCR = dataText;
         this.showLoading = false;
-        console.log(this.textOCR);
+        this.data = this.textOCR.split(".\n");
+        console.log(this.data);
     }
   },
   
 
   data: function() {
       return {
+        data: null,
         showLoading: false,
         textOCR: '',
       }
