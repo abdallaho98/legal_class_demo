@@ -1,10 +1,14 @@
 <template>
     <div class="legal-item">
     <h2 class="text">{{legal}}</h2>
+    
     </div>
 </template>
 
 <script>
+
+import ChartDoughnut from "@/components/chart-doughnut";
+
 export default {
     name:'item',
     props: ['legal'],
