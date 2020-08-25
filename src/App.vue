@@ -45,13 +45,19 @@ export default {
       return text;
     } ,
     show() {
+        this.data = null;
         this.showLoading = true;
         this.recognize(this);
     },
     hide(dataText) {
         this.textOCR = dataText;
         this.showLoading = false;
-        this.data = this.textOCR.split(".\n");
+        this.textOCR = this.textOCR.replace(/\(.\)/g,"\n");
+        this.textOCR = this.textOCR.replace(/[\n]+/g,"\n");
+        let array = this.textOCR.split(/\.( )*\n/);
+        this.data = array.filter(function (el) {
+          return el != null && el.length > 10;
+        });
         console.log(this.data);
     }
   },
