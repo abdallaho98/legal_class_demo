@@ -1,19 +1,35 @@
 <template>
-    <div class="green">
+    <div class="legal-item">
+    <h2 class="text">{{legal.content}}</h2>
         
     </div>
 </template>
 
 <script>
 export default {
+    name:'item',
+    props: ['legal'],
     
 }
 </script>
 
 <style>
-   .green {
-        color: black;
-        background-color: #4CAF50; /* Green */
-        width: 100%,
+
+    .legal-item{
+        z-index: 5;
+        border: 24px;
+        margin: 100px;
+        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+        transition: 0.3s;
+        border-radius: 5px; /* 5px rounded corners */ 
+        padding: 8px 32px 8px 32px;
+        line-height: 10px;
+        width: 80%;
+        text-align: right;
+        display: inline-block;
+    }
+
+    .text{
+        line-height: 32px;
     }
 </style>

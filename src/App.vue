@@ -22,6 +22,9 @@ const worker = createWorker({
 
 export default {
   name: 'app',
+  components:{
+         legal
+    },
   methods: {
     recognize: async (context) => {
       const img = document.getElementById('text-img');
