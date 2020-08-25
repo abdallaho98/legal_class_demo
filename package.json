@@ -10,6 +10,7 @@
   "dependencies": {
     "chart.js": "^2.9.3",
     "core-js": "^2.6.5",
+    "firebase": "^7.19.0",
     "tesseract.js": "^2.0.0-beta.1",
     "vue": "^2.6.10",
     "vue-axios": "^2.1.5",
