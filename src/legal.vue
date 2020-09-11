@@ -27,7 +27,7 @@ export default {
     ],
     data () {
       return {
-        types: ["droit" , "permission" , "obliugation" , "prohibition","autre"],
+        types: ["droit" , "permission" , "obligation" , "prohibition","autre"],
         colorstypes: ["#4d73bf","#df8342","#f6c343","#a6a6a6","#6a9cd1"],
         sections0: [
           { label: 'Blue section', value: 25, color: '#4d73bf' }

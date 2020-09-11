@@ -1,7 +1,8 @@
 <template>
   <div id="app">
     <center>
-        <div>
+        <div class="switch-holder"><label class="switch"><input @click="onToggle" type="checkbox" id="togBtn"><div class="slider round"></div></label></div>
+        <div v-if="isImage==true">
             <div>
               <p>Upload an image to Firebase:</p>
               <input type="file" @change="previewImage" accept="image/*" >
@@ -16,6 +17,8 @@
               <button @click="onUpload">Upload</button>
             </div>
         </div>
+
+        <textarea dir="rtl" v-model="textarea" v-if="isImage==false" class="textarea" id="textarea" name="textarea" rows="20" cols="100"></textarea>
         
         <div class="all">
             <button class="btn" v-on:click="show">recognize</button>
@@ -67,7 +70,17 @@ export default {
     show() {
         this.data = null;
         this.showLoading = true;
-        this.recognize(this);
+        this.sleep(1000).then(() => {if(this.isImage == true){
+          this.recognize(this);
+        } else {
+          this.texterize();
+        }});
+    },
+    sleep(time) {
+      return new Promise((resolve) => setTimeout(resolve, time));
+    },
+    texterize(){
+        this.hide(this.textarea)
     },
     hide(dataText) {
         this.textOCR = dataText;
@@ -97,6 +110,14 @@ export default {
         });
       }
       );
+    },
+    onToggle(){
+      console.log('togle')
+      if(this.isImage){
+        this.isImage = false;
+      } else {
+        this.isImage = true;
+      }
     }
   },
   
@@ -109,12 +130,16 @@ export default {
         imageData: null,
         picture: null,
         uploadValue: 0,
+        isImage: true,
+        textarea: null,
       }
     }
 }
 </script>
 
 <style>
+
+
 #app {
   width: 100%;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -134,6 +159,13 @@ export default {
   width: 120px;
   height: 120px;
   animation: spin 2s linear infinite;
+}
+
+.textarea {
+
+  margin-top: 100px;
+  background-color: #FAFAFA;
+
 }
 
 @keyframes spin {
@@ -165,6 +197,86 @@ export default {
 
 .all{
   width: 100%;
+}
+
+
+
+//togle
+
+
+.switch-holder {
+  position: relative;
+  display: inline-block;
+  width: 120px;
+  height: 34px;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 120px;
+  height: 34px;
+}
+
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #77aaff;
+  -webkit-transition: .4s;
+  transition: .4s;
+   border-radius: 34px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2ab934;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(85px);
+}
+
+/*------ ADDED CSS ---------*/
+.slider:after
+{
+ content:'Image';
+ color: white;
+ display: block;
+ position: absolute;
+ transform: translate(-50%,-50%);
+ top: 50%;
+ left: 50%;
+ font-size: 10px;
+ font-family: Verdana, sans-serif;
+}
+
+input:checked + .slider:after
+{  
+  content:'Text';
 }
 
 
